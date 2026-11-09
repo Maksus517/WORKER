@@ -10,14 +10,11 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Введите количество работников: ");
-        int n = scanner.nextInt();
+        int n = getIntInput(scanner, "Введите количество работников: ");
 
         List<Worker> workers = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
-            scanner.nextLine();
-
             System.out.println("\nРаботник " + (i + 1));
 
             System.out.print("Фамилия и инициалы: ");
@@ -26,17 +23,13 @@ public class Main {
             System.out.print("Должность: ");
             String pos = scanner.nextLine();
 
-            System.out.print("Зарплата: ");
-            double sal = scanner.nextDouble();
-
-            System.out.print("Год поступления на работу: ");
-            int year = scanner.nextInt();
+            double sal = getDoubleInput(scanner, "Зарплата: ");
+            int year = getIntInput(scanner, "Год поступления на работу: ");
 
             workers.add(new Worker(name, pos, sal, year));
         }
 
-        System.out.print("\nВведите минимальный стаж работы (лет): ");
-        int minExperience = scanner.nextInt();
+        int minExperience = getIntInput(scanner, "\nВведите минимальный стаж работы (лет): ");
 
         int currentYear = 2026;
         boolean found = false;
@@ -54,5 +47,29 @@ public class Main {
         }
 
         scanner.close();
+    }
+
+    private static int getIntInput(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка: введите целое число.");
+            }
+        }
+    }
+
+    private static double getDoubleInput(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+            try {
+                return Double.parseDouble(input.replace(",", "."));
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка: введите число.");
+            }
+        }
     }
 }
